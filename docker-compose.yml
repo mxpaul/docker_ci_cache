@@ -1,0 +1,28 @@
+version: "3"
+services:
+  pgcheck:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: checkpg_minimal
+    container_name: checkpg_service
+    depends_on:
+      - pgsql
+    environment:
+      - POSTGRES_ADDR
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+  pgsql:
+    container_name: checkpg_postgres
+    image: postgres:13.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1pgpassword1
+  run_test:
+    depends_on:
+      - pgcheck
+    image: curlimages/curl:7.77.0
+    container_name: checkpg_integration_test
+    command: [ "/bin/sh", "-c", '[ "$$(curl -s http://pgcheck:7654)" = "$$EXPECT_RESPONSE" ]' ]
+    environment:
+      - EXPECT_RESPONSE
