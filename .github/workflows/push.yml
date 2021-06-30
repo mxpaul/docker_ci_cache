@@ -9,7 +9,9 @@ jobs:
         uses: actions/checkout@v2
       -
         name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@master
+        with:
+          install: true
       -
         name: Cache Docker layers
         uses: actions/cache@v2
@@ -29,7 +31,7 @@ jobs:
           push: false
           load: true
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache
       -
         run: docker-compose pull --ignore-pull-failures
       -
@@ -43,7 +45,7 @@ jobs:
           tags: checkpg_minimal
           push: false
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
       -
         name: Rotate docker buildx cache
         run: |
