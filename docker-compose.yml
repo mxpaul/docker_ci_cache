@@ -1,10 +1,11 @@
-version: "3"
+version: "3.4"
 services:
   pgcheck:
     build:
       context: .
       dockerfile: Dockerfile
-    image: checkpg_minimal
+      target: appbuild
+    image: checkpg_appbuild
     container_name: checkpg_service
     depends_on:
       - pgsql
