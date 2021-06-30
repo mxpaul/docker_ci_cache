@@ -5,3 +5,4 @@
 0005: trigger docker image rebuild
 0006: trigger docker image rebuild
 0007: trigger docker image rebuild
+0008: trigger docker image rebuild
