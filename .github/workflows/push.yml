@@ -24,7 +24,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: Dockerfile
-          tags: checkpg_minimal
+          tags: checkpg_appbuild
           push: false
           load: true
           cache-from: type=local,src=/tmp/.buildx-cache
