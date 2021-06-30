@@ -7,54 +7,54 @@ jobs:
       -
         name: Checkout code
         uses: actions/checkout@v2
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      -
-        name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-      -
-        name: Build docker image
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          file: Dockerfile
-          target: appbuild
-          tags: checkpg_appbuild
-          push: false
-          load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new
+      #-
+      #  name: Set up Docker Buildx
+      #  uses: docker/setup-buildx-action@v1
+      #-
+      #  name: Cache Docker layers
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: /tmp/.buildx-cache
+      #    key: ${{ runner.os }}-buildx-${{ github.sha }}
+      #    restore-keys: |
+      #      ${{ runner.os }}-buildx-
+      #-
+      #  name: Build docker image
+      #  id: docker_build
+      #  uses: docker/build-push-action@v2
+      #  with:
+      #    file: Dockerfile
+      #    target: appbuild
+      #    tags: checkpg_appbuild
+      #    push: false
+      #    load: true
+      #    cache-from: type=local,src=/tmp/.buildx-cache
+      #    cache-to: type=local,dest=/tmp/.buildx-cache-new
       -
         run: docker-compose pull --ignore-pull-failures
       -
         run: ./run_tests.sh
-      -
-        name: Rotate docker buildx cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+      #-
+      #  name: Rotate docker buildx cache
+      #  run: |
+      #    rm -rf /tmp/.buildx-cache
+      #    mv /tmp/.buildx-cache-new /tmp/.buildx-cache
   build_production_image:
     needs:
       - run_integration_tests
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      -
-        name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
+      #-
+      #  name: Set up Docker Buildx
+      #  uses: docker/setup-buildx-action@v1
+      #-
+      #  name: Cache Docker layers
+      #  uses: actions/cache@v2
+      #  with:
+      #    path: /tmp/.buildx-cache
+      #    key: ${{ runner.os }}-buildx-${{ github.sha }}
+      #    restore-keys: |
+      #      ${{ runner.os }}-buildx-
       -
         name: Build docker image
         id: docker_build
@@ -63,5 +63,5 @@ jobs:
           file: Dockerfile
           tags: checkpg_minimal
           push: false
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+      #    cache-from: type=local,src=/tmp/.buildx-cache
+      #    cache-to: type=local,dest=/tmp/.buildx-cache
